@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private StompClient stompClient;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         setUpImageViews();
         initiateConnection();
     }
+
+
+
+
+
 
     //Gets references for all the Views in the Activity. Sets up OnClickListeners.
     public void setUpImageViews(){
@@ -149,8 +157,12 @@ public class MainActivity extends AppCompatActivity {
             gameState.getGameState().add(new StateAndView(im,"blank"));
             im.setOnClickListener(gameOnClickListener);
         }
-
     }
+
+
+
+
+
 
     //Creates a JSON Object String which contains the gameState as String Array and the Mark.
     public String prepareGameStateString(){
@@ -163,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
         return s;
     }
 
+
+
+
+
+
     //Returns the StateAndView object that contains a certain ImageView.
     public StateAndView getStateAndViewByImageView(ImageView img){
         for(StateAndView state : gameState.getGameState()){
@@ -172,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
+
+
+
 
 
 
@@ -226,6 +247,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
     //Handles the Message the Server Sends from the initialize topic.
     private void initializeGameVariables(StompMessage message) {
         JSONObject payload = null;
@@ -265,15 +290,14 @@ public class MainActivity extends AppCompatActivity {
             //Subscribes the application to the isgameover topic, where a message will be sent when the game is over.
             stompClient.topic("/topic/isgameover").subscribe((StompMessage stompMessage) -> handleGameOver(stompMessage) , throwable -> Log.d("tag","Error! "+ throwable.getLocalizedMessage()));
 
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-
     }
+
+
+
 
 
 
@@ -327,6 +351,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
+
     //This method is called when a message from the isgameover topic is received.
     private void handleGameOver(StompMessage stompMessage) {
 
@@ -376,10 +405,20 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
+
+
+
+
+
+
     //When the Reset Button is pressed we Recreate the Activity for a new game to be played.
     public void reset(){  this.recreate();  }
+
+
+
+
+
 
     //Gets called when the Activity is Destroyed. Disconnects the Stomp Client.
     @Override
@@ -387,6 +426,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         stompClient.disconnect();
     }
-
 
 }
